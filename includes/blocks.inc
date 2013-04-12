@@ -198,7 +198,7 @@ function islandora_solr_simple_search_form_submit($form, &$form_state) {
   $search_string = str_replace('/', '~slsh~', $search_string); //replace the slash so url doesn't break
 
   // set query
-  $query = array('type' => 'dismax');
+  // $query = array('type' => 'dismax');
 
   drupal_goto('islandora/search/' . $search_string, array('query' => $query));
 }
