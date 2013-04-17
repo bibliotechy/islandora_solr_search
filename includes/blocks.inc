@@ -200,7 +200,7 @@ function islandora_solr_simple_search_form_submit($form, &$form_state) {
   // set query
   // $query = array('type' => 'dismax');
 
-  drupal_goto('islandora/search/' . $search_string, array('query' => $query));
+  drupal_goto('islandora/search/' . $search_string);
 }
 
 
