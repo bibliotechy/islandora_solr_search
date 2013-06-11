@@ -39,6 +39,7 @@ function islandora_solr_islandora_solr_query_blocks() {
       'class' => NULL,
       'function' => NULL,
       'form' => 'islandora_solr_simple_search_form',
+      'cache' => DRUPAL_NO_CACHE,
     ),
     'basic_facets' => array(
       'name' => t('Islandora facets'),
@@ -163,7 +164,7 @@ function islandora_solr_block_view($block_name = '') {
  * @param type $form_state
  * @return string
  */
-function islandora_solr_simple_search_form($form, &$form_state) {
+function islandora_solr_simple_search_form($form, &$form_state, $collection = NULL) {
 
   $form['simple'] = array(
     '#type' => 'container',
@@ -178,6 +179,13 @@ function islandora_solr_simple_search_form($form, &$form_state) {
     '#title' => '',
     '#default_value' => '', // @TODO: should this be the searched value?
   );
+  if ($collection !== NULL) {
+    $form['simple']['limit_to_collection'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Search only this collection?'),
+      '#return_value' => $collection,
+    );
+  }
   $form['simple']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('search')
@@ -194,13 +202,16 @@ function islandora_solr_simple_search_form($form, &$form_state) {
  */
 function islandora_solr_simple_search_form_submit($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
+  $options = array();
   $search_string = $form_state['values']['islandora_simple_search_query'];
   $search_string = str_replace('/', '~slsh~', $search_string); //replace the slash so url doesn't break
-
+  if (isset($form_state['values']['limit_to_collection']) && $form_state['values']['limit_to_collection'] !== 0) {
+    $options = array('query' => array('limit_to_collection' => $form_state['values']['limit_to_collection']));
+  }
   // set query
   // $query = array('type' => 'dismax');
 
-  drupal_goto('islandora/search/' . $search_string);
+  drupal_goto('islandora/search/' . $search_string, $options);
 }
 
 

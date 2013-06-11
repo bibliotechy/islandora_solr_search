@@ -237,6 +237,10 @@ class IslandoraSolrQueryProcessor {
       $this->solrParams['fq'][] = implode(' OR ', $namespace_array);
     }
 
+    if (isset($this->internalSolrParams['limit_to_collection'])) {
+      $this->solrParams['fq'][] = "isl_parent_collection_mt:".str_replace(':', '\:', $this->internalSolrParams['limit_to_collection']);
+    }
+    
     // If no qf fields are specified in the requestHandler a default list is
     // supplied here for dismax searches.
     if (!variable_get('islandora_solr_dismax_allowed', FALSE) && isset($this->internalSolrParams['type']) && ($this->internalSolrParams['type'] == "dismax" || $this->internalSolrParams['type'] == "edismax")) {
