@@ -192,8 +192,8 @@ function islandora_solr_simple_search_form_submit($form, &$form_state) {
   if (isset($form_state['values']['limit_to_collection']) && $form_state['values']['limit_to_collection'] !== 0) {
     $options = array('query' => array('limit_to_collection' => $form_state['values']['limit_to_collection']));
   }
-  // set query
-  // $query = array('type' => 'dismax');
+
+  $options['type'] = 'dismax';
 
   drupal_goto('islandora/search/' . $search_string, $options);
 }
