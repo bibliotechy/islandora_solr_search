@@ -135,6 +135,13 @@ function hook_islandora_pageCModel_islandora_solr_object_result_alter(&$search_r
 }
 
 /**
+ * Implements hook_CMODEL_PID_islandora_solr_object_result_alter().
+ */
+function hook_islandora_bookCModel_islandora_solr_object_result_alter(&$search_results, $query_processor) {
+  $search_results['object_url_params']['terms'] = $query_processor->solrQuery;
+}
+
+/**
  * Implements hook_islandora_solr_results_alter().
  */
 function hook_islandora_solr_results_alter(&$search_results, $query_processor) {
