@@ -274,7 +274,7 @@ class IslandoraSolrQueryProcessor {
     }
 
     if (isset($this->internalSolrParams['limit_to_collection'])) {
-      $this->solrParams['fq'][] = "isl_parent_collection_mt:".str_replace(':', '\:', $this->internalSolrParams['limit_to_collection']);
+      $this->solrParams['fq'][] = "isl_parent_collection_ms:".str_replace(':', '\:', $this->internalSolrParams['limit_to_collection']);
     }
     
     // If no qf fields are specified in the requestHandler a default list is
